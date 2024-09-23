@@ -22,9 +22,14 @@ function App() {
 
   return (
     <div className='app'>
-      <Card data={tareas.filter(tarea => tarea.status === 'To Do')} />
-      <Card data={tareas.filter(tarea => tarea.status === 'In Progress')} />
-      <Card data={tareas.filter(tarea => tarea.status === 'Done')} />
+      <div className='heading'>componente Gestor de tareas</div>
+      <div className='board'>
+        <Card status='Backlog' data={tareas.filter(tarea => tarea.status === 'Backlog')} />
+        <Card status='To Do' data={tareas.filter(tarea => tarea.status === 'To Do')} />
+        <Card status='In Progress' data={tareas.filter(tarea => tarea.status === 'In Progress')} />
+        <Card status='Blocked' data={tareas.filter(tarea => tarea.status === 'Blocked')} />
+        <Card status='Done' data={tareas.filter(tarea => tarea.status === 'Done')} />
+      </div>
     </div>
   )
 }
