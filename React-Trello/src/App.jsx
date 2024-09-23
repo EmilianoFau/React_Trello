@@ -1,18 +1,20 @@
 import Card from './components/Card/index.jsx';
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { fetchData } from './fetchData.jsx';
 import './App.css'
 
-
-const apiData = fetchData("http://localhost:3000/api/tasks");
-
 function App() {
+  const apiData = fetchData("http://localhost:3000/api/tasks");
   const data = apiData.read();
+
+  console.log(data);
 
   return (
     <div className='app'>
       <Suspense fallback={<div>Loading...</div>}>
-        <Card type="backlog" data={data} />
+        <Card status="To Do" data={data} />
+        <Card status="In Progress" data={data} />
+        <Card status="Done" data={data} />
       </Suspense>
     </div>
   )

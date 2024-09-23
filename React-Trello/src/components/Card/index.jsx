@@ -2,11 +2,11 @@ import React from 'react';
 import Button from '../Button/index.jsx';
 import Styles from './index.module.css';
 
-export function Card ({ type, data }) {
+function Card ({ status, data }) {
     return (
         <ul>
             {data
-                .filter(task => task.type === type)
+                .filter(task => task.status === status)
                 .map(task => (
                     <li key={task.id}>
                         <p>{task.title}</p>
@@ -16,3 +16,5 @@ export function Card ({ type, data }) {
         </ul>
     )
 }
+
+export default Card;
