@@ -22,9 +22,11 @@ function App() {
 
   return (
     <div className='app'>
-      <Card type="backlog" data={tareas} />
+      <Card data={tareas.filter(tarea => tarea.status === 'To Do')} />
+      <Card data={tareas.filter(tarea => tarea.status === 'In Progress')} />
+      <Card data={tareas.filter(tarea => tarea.status === 'Done')} />
     </div>
   )
 }
 
-export default App
+export default App;
