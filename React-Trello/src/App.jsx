@@ -3,6 +3,7 @@ import Card from './components/Card/index.jsx';
 import './App.css'
 import { useEffect, useState } from 'react';
 import Button from './components/Button/index.jsx';
+import Heading from './components/Heading/index.jsx';
 import { Modal } from './components/Modal/index.jsx';
 
 function App() {
@@ -40,9 +41,10 @@ function App() {
     setAbrirModalAgregar(false);
   }
 
+
   return (
     <div className='app'>
-      <div className='heading'>componente Gestor de tareas</div>
+      <Heading text='Gestor de Tareas' />
       <div className='board'>
         <Card status='Backlog' data={tareas.filter(tarea => tarea.status === 'Backlog')} />
         <Card status='To Do' data={tareas.filter(tarea => tarea.status === 'To Do')} />
@@ -53,7 +55,13 @@ function App() {
       <Button text='Agregar tarea' onClick={abrirModal}/>
 
       {abrirModalAgregar && (
-          <Modal isEditTask={false} task={emptyTask} cerrarModal={cerrarModal}/>
+          <Modal 
+            isEditTask={false} 
+            task={emptyTask} 
+            cerrarModal={cerrarModal} 
+            tareas={tareas} 
+            setTareas={setTareas}
+            />
       )}
     </div>
   )

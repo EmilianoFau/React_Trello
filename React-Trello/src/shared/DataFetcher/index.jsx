@@ -41,11 +41,14 @@ export async function putData(url, id, task) {
     }
 }
 
-export async function postData( url, dataList ) {
+export async function postData( url, taskData ) {
     try {
         const response = await fetch(url, {
             method: 'POST',
-            body: JSON.stringify(dataList)
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(taskData)
         });
 
         if (!response.ok) {
@@ -53,7 +56,7 @@ export async function postData( url, dataList ) {
         }
 
         const result = await response.json();
-        console.log('Tarea agregada: ', result);
+        return result;
     } catch (error) {
         console.log("No se pudo agregar la tarea: ", error);
     }
