@@ -46,11 +46,11 @@ function App() {
     <div className='app'>
       <Heading text='Gestor de Tareas' />
       <div className='board'>
-        <Card status='Backlog' data={tareas.filter(tarea => tarea.status === 'Backlog')} />
-        <Card status='To Do' data={tareas.filter(tarea => tarea.status === 'To Do')} />
-        <Card status='In Progress' data={tareas.filter(tarea => tarea.status === 'In Progress')} />
-        <Card status='Blocked' data={tareas.filter(tarea => tarea.status === 'Blocked')} />
-        <Card status='Done' data={tareas.filter(tarea => tarea.status === 'Done')} />
+        <Card status='Backlog' data={tareas.filter(tarea => tarea.status === 'Backlog')} setTareas={setTareas} />
+        <Card status='To Do' data={tareas.filter(tarea => tarea.status === 'To Do')} setTareas={setTareas} />
+        <Card status='In Progress' data={tareas.filter(tarea => tarea.status === 'In Progress')} setTareas={setTareas} />
+        <Card status='Blocked' data={tareas.filter(tarea => tarea.status === 'Blocked')} setTareas={setTareas} />
+        <Card status='Done' data={tareas.filter(tarea => tarea.status === 'Done')} setTareas={setTareas} />
       </div>
       <Button text='Agregar tarea' onClick={abrirModal}/>
 
@@ -59,7 +59,6 @@ function App() {
             isEditTask={false} 
             task={emptyTask} 
             cerrarModal={cerrarModal} 
-            tareas={tareas} 
             setTareas={setTareas}
             />
       )}

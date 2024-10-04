@@ -3,7 +3,7 @@ import style from "./index.module.css";
 import Button from '../Button/index'
 import { deleteData, putData, postData, dataFetcher } from "../../shared/DataFetcher/index";
 
-export function Modal({ isEditTask, task, cerrarModal, tareas, setTareas }) {
+export function Modal({ isEditTask, task, cerrarModal, setTareas }) {
     const [newTitle, setTitle] = useState(isEditTask ? task.title : '');
     const [newDescription, setDescription] = useState(isEditTask ? task.description : '');
     const [newAssignedTo, setAssignedTo] = useState(isEditTask ? task.assignedTo : 'Rodrigo Lujambio');
@@ -12,17 +12,6 @@ export function Modal({ isEditTask, task, cerrarModal, tareas, setTareas }) {
     const [newPriority, setPriority] = useState(isEditTask ? task.priority : 'High');
 
     const jsonifyTask = () => {
-        console.log(1);
-        console.log(newTitle);
-        console.log(newDescription);
-        console.log(newAssignedTo);
-        console.log(task.startDate);
-        console.log(newEndDate);
-        console.log(newStatus);
-        console.log(newPriority);
-        console.log(task.comments);
-        console.log(task.id);
-
         return {
             title: newTitle, 
             description: newDescription,
@@ -41,24 +30,14 @@ export function Modal({ isEditTask, task, cerrarModal, tareas, setTareas }) {
         const newTask = jsonifyTask();
 
         console.log("Nueva tarea antes de enviar:", newTask);
+        console.log("setTareas (desde Modal):", setTareas);  
 
         try {
-            console.log(2);
-            console.log(newTask.id);
-            console.log(newTask.title);
-            console.log(newTask.description);
-            console.log(newTask.assignedTo);
-            console.log(newTask.startDate);
-            console.log(newTask.endDate);
-            console.log(newTask.status);
-            console.log(newTask.comments);
-
             console.log("Nueva tarea: ", newTask);
 
             if (isEditTask) {
                 await putData(`http://localhost:3000/api/tasks/${task.id}`, newTask);
-                const updatedTasks = tareas.map(t => t.id === task.id ? newTask : t);
-                setTareas(updatedTasks);
+                setTareas((prevTasks) => prevTasks.map(t => t.id === task.id ? newTask : t));
             } else {
                 const response = await postData('http://localhost:3000/api/tasks', newTask);
                 console.log("Tarea agregada:", response);
@@ -66,9 +45,8 @@ export function Modal({ isEditTask, task, cerrarModal, tareas, setTareas }) {
             }
 
             cerrarModal();
-
         } catch (error) {
-            console.error("Error al agregar la tarea:", error);
+            console.error("Error: ", error);
         }
     }
 
