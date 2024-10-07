@@ -1,39 +1,29 @@
 .card {
   background-color: #f9f9f9;
   border-radius: 8px;
-  padding: 16px;
+  padding: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 16px 0;
   max-width: 400px;
   width: 100%;
 }
 
-
-  
 .card h3 {
-  color: black;
+  text-align: center;
+  margin-bottom: 10px;
+  color: white;
 }
 
 .card ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  max-height: 20px;
+  overflow-y: auto;
 }
 
 .card li {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 12px;
-  margin-bottom: 8px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: background-color 0.2s ease;
-}
-
-.card li:hover {
-  background-color: #f1f1f1;
 }
 
 .card p {
@@ -41,3 +31,9 @@
   font-size: 16px;
   color: #333;
 }
+
+.dark-mode {
+  background-color: #1b1f29;
+  border: 1px solid #161b2a;
+}
+

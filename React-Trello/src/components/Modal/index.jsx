@@ -1,9 +1,12 @@
 import { useState } from "react";
 import style from "./index.module.css";
 import Button from '../Button/index'
-import { deleteData, putData, postData, dataFetcher } from "../../shared/DataFetcher/index";
+import { putData, postData } from "../../shared/DataFetcher/index";
+import { useTareas } from "../../contexts/tasks";
 
-export function Modal({ isEditTask, task, cerrarModal, setTareas }) {
+export function Modal({ isEditTask, task, cerrarModal }) {
+    const { setTareas } = useTareas();
+
     const [newTitle, setTitle] = useState(isEditTask ? task.title : '');
     const [newDescription, setDescription] = useState(isEditTask ? task.description : '');
     const [newAssignedTo, setAssignedTo] = useState(isEditTask ? task.assignedTo : 'Rodrigo Lujambio');
@@ -36,12 +39,19 @@ export function Modal({ isEditTask, task, cerrarModal, setTareas }) {
             console.log("Nueva tarea: ", newTask);
 
             if (isEditTask) {
-                await putData(`http://localhost:3000/api/tasks/${task.id}`, newTask);
-                setTareas((prevTasks) => prevTasks.map(t => t.id === task.id ? newTask : t));
+                if (task.id) {  
+                    await putData(`http://localhost:3000/api/tasks/${task.id}`, newTask);
+                    setTareas((prevTasks) => prevTasks.map(t => t.id === task.id ? newTask : t));
+                    console.log("Tarea actualizada:", newTask);
+                } else {
+                    console.error("Error: La tarea no tiene un id válido.");
+                }
             } else {
                 const response = await postData('http://localhost:3000/api/tasks', newTask);
-                console.log("Tarea agregada:", response);
-                setTareas((prevTasks) => [...prevTasks, response]);
+                if (response.id) {
+                    console.log("Tarea agregada:", response);
+                    setTareas((prevTasks) => [...prevTasks, response]);
+                }
             }
 
             cerrarModal();
@@ -50,20 +60,11 @@ export function Modal({ isEditTask, task, cerrarModal, setTareas }) {
         }
     }
 
-    const putTask = async (event) => {
-        event.preventDefault();
-        await putData('http://localhost:3000/api/tasks', task.id, jsonifyTask());
-        console.log(await dataFetcher('http://localhost:3000/api/tasks'));
-        renderizarTareas();
-        cerrarModal();
-    }
-
-
     return (
         <>
             <div className={`${style.modal} ${style.overlay}`}>
                 <h2>{isEditTask ? `Editar tarea` : `Agregar tarea`}</h2>
-                <form>
+                <form onSubmit={handleSave}>
                     <div>
                         <label>Título</label>
                         <div>
@@ -126,7 +127,7 @@ export function Modal({ isEditTask, task, cerrarModal, setTareas }) {
                         </div>
                     </div>
 
-                    <Button text={isEditTask ? 'Editar' : 'Agregar'} onClick={handleSave} />
+                    <Button text={isEditTask ? 'Editar' : 'Agregar'} type='submit' />
                     <Button text='Cancelar' onClick={cerrarModal} />
 
                 </form>

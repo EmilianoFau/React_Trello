@@ -3,8 +3,12 @@ import { useState } from 'react';
 import { Modal } from '../Modal';
 import Task from '../Task';
 import { deleteData } from "../../shared/DataFetcher/index";
+import { useTareas } from "../../contexts/tasks";
+import { useTheme } from '../../contexts/theme';
 
-function Card ({ status, data, setTareas }) {
+function Card ({ status, data }) {
+    const { setTareas } = useTareas();
+    const { isDarkMode } = useTheme();
     const [abrirModalEdit, setAbrirModalEdit] = useState(false);
     const [currentTask, setCurrentTask] = useState(null);
 
@@ -29,7 +33,7 @@ function Card ({ status, data, setTareas }) {
 
     return (
         <>
-            <ul className={Styles.card}>
+            <ul className={`${Styles.card} ${isDarkMode ? Styles['dark-mode'] : ''}`}>
                 <h3>{status}</h3>
                 {data.map(task => (
                     <li key={task.id} onClick={() => abrirModal(task)}>
