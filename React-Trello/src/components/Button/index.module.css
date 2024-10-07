@@ -5,9 +5,22 @@ button {
     border-radius: 8px;
     color: white;
     cursor: pointer;
+    background-color: #84929b;
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
     transition: border-color 0.25s;
 }
   
+button:hover {
+    background-color: #878da1;
+}
+
+.dark-mode {
+    background-color: #161b2b;
+    border: 1px solid #1c2131;
+}
+
+button:hover .dark-mode {
+    background-color: #1c2237;
+}
